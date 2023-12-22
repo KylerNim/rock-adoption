@@ -30,6 +30,13 @@ app.get('/userInfo', (req, res) => {
     .catch((error) => { res.status(404).send(error); })
 })
 
+app.post('/userInfo', (req, res) => {
+    let { userName, password } = req.body;
+    db.query('INSERT INTO userInfo (user_name, password) VALUES ($1, $2)', [userName, password])
+    .then((result) => { res.status(201).send(result); })
+    .catch((error) => { res.status(500).send(error); })
+})
+
 app.listen(8000, () => {
     console.log('Listening on Port 8000...')
 })

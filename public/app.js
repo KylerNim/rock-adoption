@@ -1,4 +1,4 @@
-/////////////////////////////////////// LOGIN ///////////////////////////////////////
+//////////////////////////////////// LOGIN // REGISTRY ///////////////////////////////////////
 $('.loginForm').on('submit', (event) => {
     event.preventDefault();
     $.get('/userInfo', (data, error) => {
@@ -10,18 +10,34 @@ $('.loginForm').on('submit', (event) => {
         }
     })
 })
+$('.registryForm').on('submit', (event) => {
+    event.preventDefault();
+    let credentials = { userName: $('#regUserName').val(), password: $('#regPassword').val() }
+    $.post({
+        traditional: true,
+        url: '/userInfo',
+        contentType: 'application/json',
+        data: JSON.stringify( credentials ),
+        dataType: 'json',
+        success: function(response){
+            $('.login').toggleClass('none');
+            $('.createAccount').toggleClass('none');
+            $('.register').toggleClass('none');
+        }
+    });
+})
 
 $('.registerButton').click((event) => {
     $('.login').toggleClass('none');
-    $('.createAccount').toggleCLass('none');
+    $('.createAccount').toggleClass('none');
     $('.register').toggleClass('none');
 })
 
 /////////////////////////////////////////////////////////////////////////////////////
-$.get('/rocks', (data, error) => {
-    if (error) { console.error(error); };
-    console.log(data);
-})
+// $.get('/rocks', (data, error) => {
+//     if (error) { console.error(error); };
+//     console.log(data);
+// })
 
 ///////////////////////////////////// FUNCTIONS //////////////////////////////////////
 let auth = function(data) {

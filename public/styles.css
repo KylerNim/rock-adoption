@@ -1,0 +1,68 @@
+body {
+    background-color: coral;
+}
+html,
+body {
+    margin: 0px;
+    height: 100%;
+}
+
+.loginScreen {
+    position: absolute;
+    background-color: rgb(20, 20, 20);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+.loginLogo {
+    position: relative;
+    height: 400px;
+    width: 400px;
+    top: 40px;
+}
+.loginHeader {
+    color: white;
+    text-align: center;
+}
+.loginForm {
+    position: relative;
+    /* border: thin white solid; */
+    height: 100px;
+    width: 300px;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
+}
+.loginInput {
+    height: 15px;
+}
+.registryForm {
+    position: relative;
+    /* border: thin white solid; */
+    height: 100px;
+    width: 300px;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
+}
+.createAccount {
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+    position: relative;
+    width: 300px;
+    top: 100px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+.none {
+    display: none;
+}

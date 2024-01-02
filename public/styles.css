@@ -1,12 +1,12 @@
 body {
-    background-color: coral;
+    background-color: rgb(46, 46, 46);
 }
 html,
 body {
     margin: 0px;
     height: 100%;
 }
-
+/* //////////////////////////////////// LOGIN ///////////////////////////////////////// */
 .loginScreen {
     position: absolute;
     background-color: rgb(20, 20, 20);
@@ -15,6 +15,7 @@ body {
     display: flex;
     flex-flow: column;
     align-items: center;
+    z-index: 3;
 }
 .loginLogo {
     position: relative;
@@ -60,6 +61,126 @@ body {
     top: 100px;
 }
 
+/* //////////////////////////////////// Main Page ////////////////////////////////////// */
+.mainPage {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
+.rockList {
+    position: relative;
+    height: auto;
+    width: 1500px;
+    /* outline: thin white solid; */
+    display: flex;
+    flex-wrap: wrap;
+    top: 200px;
+    pointer-events: none;
+}
+.rockTile {
+    height: 300px;
+    width: 300px;
+    outline: thin rgb(128, 128, 128) solid;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    pointer-events: all;
+}
+.tileImg {
+    height: 200px;
+    width: 220px;
+    margin-top: 10px;
+    pointer-events: none;
+}
+.redText {
+    position: relative;
+    color: rgb(131, 131, 131);
+    bottom: 15px;
+    pointer-events: none;
+}
+
+/* //////////////////////////////////// BANNER ///////////////////////////////////////// */
+.pageBanner{
+    background-color: rgb(32, 32, 32);
+    position: absolute;
+    height: 100px;
+    width: 100%;
+    top: 0%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 3;
+}
+.bannerLogo {
+    position: relative;
+    height: 90px;
+    width: auto;
+    left: 10px;
+}
+.profileLogo {
+    position: relative;
+    height: 60px;
+    width: auto;
+    right: 20px;
+}
+
+/* //////////////////////////////// PURCHASE PAGE ////////////////////////////////////// */
+.purchasePage {
+    background-color: rgb(20, 20, 20);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    z-index: 3;
+}
+.purchaseImg {
+    position: relative;
+    outline: solid white thin;
+    width: 300px;
+    height: auto;
+    bottom: 150px;
+}
+.purchaseHeader{
+    position: relative;
+    bottom: 150px;
+    color: white;
+}
+.buyButton {
+    position: relative;
+}
+.adoptedMessage {
+    position: relative;
+    color: green;
+}
+
+/* ////////////////////////////////// PROFILE PAGE //////////////////////////////////// */
+.profilePage {
+    background-color: rgb(20, 20, 20);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    z-index: 3
+}
+.profileImg {
+    width: 300px;
+    height: auto;
+}
+.profileName {
+    color: white;
+}
+
+/* //////////////////////////////////// UTILITY /////////////////////////////////////// */
 .hidden {
     visibility: hidden;
 }

@@ -9,9 +9,11 @@ import 'dotenv/config';
 const databaseURL = process.env.DATABASE_URL;
 
 const db = new Pool({
-    user: 'kylerlacer',
-    database: 'rock_collection',
-    password: '1234'
+    // user: 'kylerlacer',
+    // database: 'rock_collection',
+    // password: '1234'
+
+    connectionString: databaseURL,
 });
 await db.connect();
 

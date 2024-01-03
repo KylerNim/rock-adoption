@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adopt a Pet Rock!</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script defer src="app.js"></script>
 </head>
 <body>
-    <div class="loginScreen hidden">
+    <div class="loginScreen">
         <img class="loginLogo" src="resources/petRock.png">
         <div class="login">
             <h1 class="loginHeader">Log In</h1>
@@ -39,17 +43,22 @@
     <div class="purchasePage hidden">
         <img class="purchaseImg" src="resources/mediumMale.png">
         <h1 class="purchaseHeader">Rock Name</h1>
+        <p class="sentence"></p>
+        <h2 class="gender">Gender: </h3>
         <button class="buyButton">ADOPT!</button>
         <h3 class="adoptedMessage none">You have adopted this Rock!</h3>
     </div>
     <div class="profilePage hidden">
         <img class="profileImg" src="resources/profile.png">
         <h1 class="profileName">Name Here</h1>
+        <div class="adoptedRocks"></div>
     </div>
     <div class="pageBanner">
         <img class="bannerLogo" src="resources/petRock.png">
+        <img class="bannerTitle" src="resources/title.png">
         <img class="profileLogo" src="resources/profile.png">
     </div>
+    <div class="footer"></div>
     <div class="mainPage">
         <div class="rockList"></div>
     </div>

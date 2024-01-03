@@ -9,10 +9,6 @@ import 'dotenv/config';
 const databaseURL = process.env.DATABASE_URL;
 
 const db = new Pool({
-    // user: 'kylerlacer',
-    // database: 'rock_collection',
-    // password: '1234'
-
     connectionString: databaseURL,
 });
 await db.connect();
@@ -38,6 +34,12 @@ app.get('/userInfo', (req, res) => {
     .then((result) => { res.status(200).json(result.rows); })
     .catch((error) => { res.status(404).send(error); })
 })
+app.get('/userInfo/:id', (req, res) => {
+    let id = req.params.id;
+    db.query('SELECT * FROM rockChildren WHERE user_id = $1', [id])
+    .then((result) => { res.status(200).json(result.rows); })
+    .catch((error) => { res.status(404).send(error); })
+})
 
 /////////// POST ///////////
 app.post('/userInfo', (req, res) => {
@@ -54,6 +56,14 @@ app.patch('/rocks/:id', (req, res) => {
     db.query('UPDATE rockChildren SET user_id = $1 WHERE id = $2;', [user, id])
     .then((result) => { res.status(201).send(`Pet Adopted!`); })
     .catch((error) => { res.status(500).send(error); })
+})
+
+///////// DELETE /////////
+app.delete('/rocks/:name', (req, res) => {
+    let name = req.params.name;
+    db.query('DELETE FROM rockChildren WHERE first_name = $1;', [name])
+    .then((result) => { res.status(200).send('Rock Smashed'); })
+    .catch((error) => { res.status(500).send('Did not happen...'); })
 })
 
 //-------------------------------------------------------------------------------------//

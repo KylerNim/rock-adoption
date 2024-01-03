@@ -6,10 +6,18 @@ $('.loginForm').on('submit', (event) => {
     event.preventDefault();
     $.get('/userInfo', (data, error) => {
         if (error) { console.error(error); }
-        if (auth(data) === 'success') {
+        if (auth(data) !== 'fail') {
+            $('.login').css('outline', 'none');
             $('.loginScreen').toggleClass('none');
+            $('.profileName').html(auth(data).user_name)
+            generateProfile(loggedUser);
         } else {
             console.error('Bad Authentication');
+            $('.login').css('outline', 'thin dotted red');
+            $('.login').effect('shake');
+            setTimeout(() => {
+                alert('Incorrect username or password');
+            }, '500');
         }
     })
 })
@@ -26,29 +34,19 @@ $('.registryForm').on('submit', (event) => {
             $('.login').toggleClass('none');
             $('.createAccount').toggleClass('none');
             $('.register').toggleClass('none');
+            alert('Account Successfully Created!');
         }
     });
 })
 
 $('.registerButton').click((event) => {
+    $('.login').css('outline', 'none');
     $('.login').toggleClass('none');
     $('.createAccount').toggleClass('none');
     $('.register').toggleClass('none');
 })
 
 //////////////////////////////////////// FUNCTIONS //////////////////////////////////////////
-let auth = function(data) {
-    for (let i = 0; i < data.length; i++) {
-        if (data[i].user_name === $('#userName').val() && data[i].password === $('#password').val()) {
-            loggedUser = data[i].id
-            return 'success';
-        }
-    }
-    return 'fail';
-}
-//////////////////////////////////////// MAIN PAGE //////////////////////////////////////////
-
-
 let generateRockTiles = function() {
     $.get('/rocks', (data, error) => {
         if (error) { console.error(error); };
@@ -65,8 +63,39 @@ let generateRockTiles = function() {
             }
         }
     })
-} 
+}
+let generateProfile = function(user) {
+    $.get(`/userInfo/${loggedUser}`, (data, error) => {
+        if (error) { console.error(error); };
+        $('.adoptedRocks').empty();
+        for (let i = 0; i < data.length; i++) {
+            let div = $(`<div class="profileTile"></div>`).appendTo('.adoptedRocks');
+            if (data[i].gender === 'Male' || data[i].gender === 'Female') {
+                let img = $(`<img class="pTileImg" src="resources/${data[i].type}${data[i].gender}.png">`).appendTo(div);
+            } else {
+                let img = $(`<img class="pTileImg" src="resources/${data[i].type}Male.png">`).appendTo(div);
+            }
+            let h3 = $(`<h3 style="color: white; position: relative; left: 10px">${data[i].first_name} ${data[i].last_name}</h3>`).appendTo(div);
+            let button = $(`<button class="smashButton" id="${data[i].first_name}">Smash them?</button>`).appendTo(div);
+        }
+    })
+}
 
+let auth = function(data) {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].user_name === $('#userName').val() && data[i].password === $('#password').val()) {
+            loggedUser = data[i].id
+            return data[i];
+        }
+    }
+    return 'fail';
+}
+
+let randNum = function() {
+    return Math.floor(Math.random() * 50);
+}
+
+//////////////////////////////////////// MAIN PAGE //////////////////////////////////////////
 generateRockTiles();
 
 $('.rockList').click((event) => {
@@ -77,17 +106,15 @@ $('.rockList').click((event) => {
         } else {
             $('.purchaseImg').attr('src', `resources/${data.type}Male.png`);
         }
-        $('.purchaseHeader').html(`${data.first_name} ${data.last_name}`);
+        $('.purchaseHeader').html(`- ${data.first_name} ${data.last_name} -`);
         $('.purchaseImg').attr('id', event.target.id);
+        $('.gender').html('- Gender: ' + data.gender + ' -');
+        $('.sentence').html('- "' + data.quote + '" -');
         $('.buyButton').removeClass('none');
         $('.adoptedMessage').addClass('none');
         $('.purchasePage').removeClass('hidden');
     })
 })
-
-let randNum = function() {
-    return Math.floor(Math.random() * 50);
-}
 
 //////////////////////////////////////// BANNER //////////////////////////////////////////
 $('.bannerLogo').click((event) => {
@@ -113,8 +140,30 @@ $('.buyButton').click((event) => {
             $('.buyButton').addClass('none');
             $('.adoptedMessage').removeClass('none');
             $('.rockList').empty();
+            generateProfile(loggedUser);
             generateRockTiles();
         },
         error: (error) => {  if (error) { console.error(error); } }
     })
 });
+
+//////////////////////////////////// PROFILE PAGE ///////////////////////////////////////
+$('.adoptedRocks').click((event) => {
+    if (confirm(`Do you really wanna smash ${event.target.id}?`) === true) {
+        $.ajax({
+            url: `/rocks/${event.target.id}`,
+            type: 'DELETE',
+            success: (result) => {
+                if (randNum() > 10) {
+                    alert(`You smash ${event.target.id} to bits, revealing absolutely nothing but more rock inside. poor ${event.target.id}...`)
+                } else {
+                    alert(`After tearing ${event.target.id} to pieces, you spot something gleaming among the rocky viscera. You\'ll make a sweet buck off of this! thanks ${event.target.id}!`)
+                }
+                generateProfile(loggedUser);
+            },
+            error: (error) => { if (error) { console.error(error); } }
+        })
+    } else {
+        alert('safe for now...')
+    }
+})
